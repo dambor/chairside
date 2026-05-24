@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chairside — Run your practice with the team you actually want.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #EDE7DA;
+    --bg-warm: #E5DDC9;
+    --ink: #1A1714;
+    --ink-soft: #4A4540;
+    --muted: #8B8278;
+    --line: rgba(26, 23, 20, 0.12);
+    --line-strong: rgba(26, 23, 20, 0.2);
+    --accent: #B8472D;
+    --accent-soft: rgba(184, 71, 45, 0.08);
+    --surface: #F4EEDF;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Subtle paper grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    opacity: 0.18;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+  }
+
+  main, nav, footer { position: relative; z-index: 2; }
+
+  .serif {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(237, 231, 218, 0.78);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+  .logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 30px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .logo em {
+    color: var(--accent);
+    font-style: normal;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+  }
+  .nav-links a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 11px 22px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 100px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .nav-cta:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    padding: 100px 0 140px;
+    position: relative;
+  }
+  .marginalia {
+    position: absolute;
+    top: 100px;
+    right: 40px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: right;
+    line-height: 1.8;
+  }
+  .marginalia .line {
+    width: 32px;
+    height: 1px;
+    background: var(--muted);
+    margin: 6px 0 6px auto;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
+    margin-bottom: 48px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 1px;
+    background: var(--ink-soft);
+  }
+
+  .hero h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(56px, 9vw, 132px);
+    line-height: 0.94;
+    letter-spacing: -0.03em;
+    margin-bottom: 56px;
+    max-width: 13ch;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 80px;
+    align-items: end;
+  }
+  .lede {
+    font-size: 21px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 48ch;
+  }
+  .hero-right {
+    border-left: 1px solid var(--line-strong);
+    padding-left: 40px;
+  }
+  .hero-stat {
+    margin-bottom: 28px;
+  }
+  .hero-stat .num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 52px;
+    line-height: 1;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .hero-stat .label {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 56px;
+    padding-top: 48px;
+    border-top: 1px solid var(--line);
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--bg);
+    padding: 18px 32px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-primary:hover {
+    background: var(--accent);
+    transform: translateY(-2px);
+  }
+  .btn-primary .arrow {
+    transition: transform 0.3s;
+  }
+  .btn-primary:hover .arrow {
+    transform: translateX(4px);
+  }
+  .btn-secondary {
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--ink);
+    transition: opacity 0.2s;
+  }
+  .btn-secondary:hover { opacity: 0.6; }
+
+  /* ===== PROBLEM ===== */
+  .problem {
+    padding: 120px 0;
+    border-top: 1px solid var(--line-strong);
+  }
+  .section-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+    margin-bottom: 80px;
+    align-items: start;
+  }
+  .section-label {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
+    position: sticky;
+    top: 100px;
+  }
+  .section-headline {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 24ch;
+  }
+  .section-headline em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .stat-cell {
+    padding: 48px 32px 48px 0;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .stat-cell:nth-child(4n) {
+    border-right: none;
+    padding-right: 0;
+  }
+  .stat-cell .num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 72px;
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    margin-bottom: 16px;
+  }
+  .stat-cell .num .unit {
+    font-size: 32px;
+    color: var(--accent);
+    margin-left: 2px;
+  }
+  .stat-cell .desc {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 24ch;
+  }
+
+  /* ===== SERVICES ===== */
+  .services {
+    padding: 140px 0;
+    background: var(--bg-warm);
+    border-top: 1px solid var(--line-strong);
+    border-bottom: 1px solid var(--line-strong);
+    margin: 0 -40px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .services-inner { max-width: 1200px; margin: 0 auto; }
+
+  .services-header {
+    margin-bottom: 100px;
+    max-width: 900px;
+  }
+  .services-header .label {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
+    margin-bottom: 28px;
+  }
+  .services-header h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(40px, 6vw, 84px);
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+  .services-header h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .service-row {
+    display: grid;
+    grid-template-columns: 80px 1.5fr 1fr 1fr;
+    gap: 40px;
+    padding: 48px 0;
+    border-top: 1px solid var(--line-strong);
+    align-items: start;
+    transition: padding-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+  .service-row:last-of-type {
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .service-row:hover {
+    padding-left: 24px;
+  }
+  .service-row:hover .service-title {
+    color: var(--accent);
+  }
+  .service-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--muted);
+    letter-spacing: -0.02em;
+  }
+  .service-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 36px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    transition: color 0.3s;
+  }
+  .service-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .service-replaces {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .service-replaces .head {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 8px;
+    font-size: 11px;
+  }
+
+  /* ===== OUTCOMES ===== */
+  .outcomes {
+    padding: 140px 0;
+  }
+  .outcomes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+  .outcomes-left h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(44px, 6vw, 88px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin-bottom: 40px;
+  }
+  .outcomes-left h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .outcomes-left p {
+    font-size: 18px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 36ch;
+  }
+
+  .outcome-item {
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  .outcome-item:first-child { padding-top: 0; }
+  .outcome-num {
+    font-family: 'Instrument Serif', serif;
+    font-size: 22px;
+    color: var(--accent);
+    font-style: italic;
+  }
+  .outcome-text h3 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 26px;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    letter-spacing: -0.015em;
+  }
+  .outcome-text p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* ===== PRICING ===== */
+  .pricing {
+    padding: 140px 0;
+    border-top: 1px solid var(--line-strong);
+    background: var(--surface);
+    margin: 0 -40px;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .pricing-inner { max-width: 1200px; margin: 0 auto; }
+  .pricing-header {
+    text-align: center;
+    margin-bottom: 80px;
+  }
+  .pricing-header .label {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+  .pricing-header h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(40px, 5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 16ch;
+    margin: 0 auto;
+  }
+  .pricing-header h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .plans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .plan {
+    background: var(--bg);
+    border: 1px solid var(--line-strong);
+    border-radius: 4px;
+    padding: 40px;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .plan:hover {
+    border-color: var(--ink);
+    transform: translateY(-2px);
+  }
+  .plan.featured {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .plan.featured .plan-name,
+  .plan.featured .plan-price,
+  .plan.featured .plan-desc,
+  .plan.featured .plan-features li { color: var(--bg); }
+  .plan.featured .plan-desc,
+  .plan.featured .plan-features li { opacity: 0.75; }
+  .plan.featured .plan-flag {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: rgba(184, 71, 45, 0.15);
+    padding: 6px 10px;
+    border-radius: 100px;
+  }
+  .plan-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 28px;
+    margin-bottom: 12px;
+    letter-spacing: -0.015em;
+  }
+  .plan-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 32px;
+    line-height: 1.55;
+    min-height: 60px;
+  }
+  .plan-price {
+    font-family: 'Instrument Serif', serif;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    margin-bottom: 6px;
+  }
+  .plan-price .per {
+    font-size: 16px;
+    color: var(--muted);
+    margin-left: 4px;
+  }
+  .plan-setup {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 32px;
+  }
+  .plan.featured .plan-setup { color: rgba(237, 231, 218, 0.65); }
+  .plan-features {
+    list-style: none;
+    margin-bottom: 36px;
+  }
+  .plan-features li {
+    font-size: 14px;
+    color: var(--ink-soft);
+    padding: 12px 0;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: start;
+    gap: 12px;
+  }
+  .plan.featured .plan-features li {
+    border-top-color: rgba(237, 231, 218, 0.15);
+  }
+  .plan-features li::before {
+    content: '';
+    width: 16px;
+    height: 1px;
+    background: var(--accent);
+    margin-top: 10px;
+    flex-shrink: 0;
+  }
+  .plan-cta {
+    display: block;
+    text-align: center;
+    padding: 16px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 100px;
+    transition: all 0.2s;
+  }
+  .plan-cta:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .plan.featured .plan-cta {
+    border-color: var(--bg);
+    color: var(--ink);
+    background: var(--bg);
+  }
+  .plan.featured .plan-cta:hover {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+
+  /* ===== FINAL CTA ===== */
+  .final-cta {
+    padding: 180px 0;
+    text-align: center;
+  }
+  .final-cta h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(48px, 8vw, 120px);
+    line-height: 0.96;
+    letter-spacing: -0.03em;
+    max-width: 18ch;
+    margin: 0 auto 48px;
+  }
+  .final-cta h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .final-cta p {
+    font-size: 19px;
+    color: var(--ink-soft);
+    max-width: 50ch;
+    margin: 0 auto 56px;
+    line-height: 1.55;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    border-top: 1px solid var(--line-strong);
+    padding: 60px 0 40px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 80px;
+  }
+  .footer-logo {
+    font-family: 'Instrument Serif', serif;
+    font-size: 40px;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .footer-logo em { color: var(--accent); font-style: normal; }
+  .footer-tag {
+    font-size: 14px;
+    color: var(--ink-soft);
+    max-width: 32ch;
+    line-height: 1.55;
+  }
+  .footer-col h4 {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 12px; }
+  .footer-col a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ===== FADE IN ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .container { padding: 0 24px; }
+    .nav-links { display: none; }
+    .marginalia { display: none; }
+    .hero { padding: 60px 0 80px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 60px; }
+    .hero-right { border-left: none; padding-left: 0; border-top: 1px solid var(--line-strong); padding-top: 40px; }
+    .section-header { grid-template-columns: 1fr; gap: 32px; margin-bottom: 60px; }
+    .section-label { position: static; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stat-cell { padding: 32px 16px 32px 0; }
+    .stat-cell:nth-child(2n) { border-right: none; padding-right: 0; }
+    .stat-cell:nth-child(2n+1) { border-right: 1px solid var(--line); }
+    .services { margin: 0 -24px; padding-left: 24px; padding-right: 24px; padding-top: 80px; padding-bottom: 80px; }
+    .service-row { grid-template-columns: 1fr; gap: 16px; padding: 32px 0; }
+    .service-num { font-size: 28px; }
+    .service-title { font-size: 28px; }
+    .outcomes { padding: 80px 0; }
+    .outcomes-grid { grid-template-columns: 1fr; gap: 48px; }
+    .pricing { margin: 0 -24px; padding: 80px 24px; }
+    .plans { grid-template-columns: 1fr; gap: 16px; }
+    .final-cta { padding: 100px 0; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-bottom { flex-direction: column; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="logo">Chairside<em>.</em></div>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#services">What we run</a>
+        <a href="#outcomes">Outcomes</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+      <a href="#cta" class="nav-cta">Book a walkthrough</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="marginalia">
+        Vol. 01<div class="line"></div>Est. 2026
+      </div>
+      <div class="eyebrow">AI operations for private dental practices</div>
+      <h1>You became a dentist to do <em>dentistry.</em></h1>
+
+      <div class="hero-grid">
+        <div>
+          <p class="lede">
+            Not to manage employees, chase insurance, or rebook no-shows. Chairside runs the parts of your practice you hate, so you can run one with a team you actually want.
+          </p>
+        </div>
+        <div class="hero-right">
+          <div class="hero-stat">
+            <div class="num">3 to 1</div>
+            <div class="label">Average front desk headcount, before and after</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">14 days</div>
+            <div class="label">From kickoff to your first quiet morning</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#cta" class="btn-primary">
+          Book a 20 minute walkthrough
+          <span class="arrow">→</span>
+        </a>
+        <a href="#services" class="btn-secondary">See what we run</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM -->
+  <section class="problem">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-label">01 / The math</div>
+        <h2 class="section-headline">
+          A typical single doctor practice spends <em>$180,000</em> a year on admin staff. Half of them are looking for another job right now.
+        </h2>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-cell fade-in">
+          <div class="num">32<span class="unit">%</span></div>
+          <div class="desc">Annual turnover in dental front office roles</div>
+        </div>
+        <div class="stat-cell fade-in">
+          <div class="num">14<span class="unit">hrs</span></div>
+          <div class="desc">Spent each week on insurance verification per practice</div>
+        </div>
+        <div class="stat-cell fade-in">
+          <div class="num">27<span class="unit">%</span></div>
+          <div class="desc">Of inbound new patient calls go to voicemail</div>
+        </div>
+        <div class="stat-cell fade-in">
+          <div class="num">$61k</div>
+          <div class="desc">Loaded yearly cost per front desk hire</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="services-inner">
+      <div class="services-header fade-in">
+        <div class="label">02 / What we run for you</div>
+        <h2>The work nobody <em>wants</em> to do, run reliably, every day.</h2>
+      </div>
+
+      <div class="service-row fade-in">
+        <div class="service-num">01</div>
+        <div class="service-title">Phone and front desk</div>
+        <div class="service-desc">
+          Every call answered, every appointment booked, every FAQ handled. 24 hours a day, in English or Spanish.
+        </div>
+        <div class="service-replaces">
+          <span class="head">Replaces</span>
+          1 to 2 front desk seats, after hours answering services, and the voicemail black hole.
+        </div>
+      </div>
+
+      <div class="service-row fade-in">
+        <div class="service-num">02</div>
+        <div class="service-title">Insurance verification</div>
+        <div class="service-desc">
+          Coverage verified for tomorrow's schedule the night before. No more hold music, no more surprises at the front desk.
+        </div>
+        <div class="service-replaces">
+          <span class="head">Replaces</span>
+          The 14 weekly hours your team currently loses to insurance IVRs and payer portals.
+        </div>
+      </div>
+
+      <div class="service-row fade-in">
+        <div class="service-num">03</div>
+        <div class="service-title">Recall and reactivation</div>
+        <div class="service-desc">
+          Inactive patients contacted with personal, context aware outreach based on their last visit and overdue care.
+        </div>
+        <div class="service-replaces">
+          <span class="head">Replaces</span>
+          The dusty spreadsheet, the never sent emails, the production sitting in your inactive list.
+        </div>
+      </div>
+
+      <div class="service-row fade-in">
+        <div class="service-num">04</div>
+        <div class="service-title">Treatment plan follow up</div>
+        <div class="service-desc">
+          Patients with unscheduled treatment are nurtured by SMS, given financing options, and booked. Without nagging.
+        </div>
+        <div class="service-replaces">
+          <span class="head">Replaces</span>
+          The treatment coordinator role you keep meaning to fill but never quite do.
+        </div>
+      </div>
+
+      <div class="service-row fade-in">
+        <div class="service-num">05</div>
+        <div class="service-title">Morning huddle and daily report</div>
+        <div class="service-desc">
+          A one page brief in your inbox each morning. Risks, follow ups, opportunities. A one page debrief each evening.
+        </div>
+        <div class="service-replaces">
+          <span class="head">Replaces</span>
+          The visibility you lose the second you step into operatory one.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTCOMES -->
+  <section class="outcomes" id="outcomes">
+    <div class="container">
+      <div class="outcomes-grid">
+        <div class="outcomes-left fade-in">
+          <h2>What changes in your first <em>90 days.</em></h2>
+          <p>
+            No bloated transformations. No 18 month roadmaps. Specific outcomes you can measure on a Friday afternoon.
+          </p>
+        </div>
+        <div class="outcomes-right">
+          <div class="outcome-item fade-in">
+            <div class="outcome-num">i</div>
+            <div class="outcome-text">
+              <h3>Your phone gets answered. Every call. Every time.</h3>
+              <p>Average call response under 2 seconds, 7 days a week. New patient capture rate roughly doubles in month one.</p>
+            </div>
+          </div>
+          <div class="outcome-item fade-in">
+            <div class="outcome-num">ii</div>
+            <div class="outcome-text">
+              <h3>You stop chasing insurance.</h3>
+              <p>Eligibility verified the night before. Your team walks in to a clean schedule, not a stack of unverified appointments.</p>
+            </div>
+          </div>
+          <div class="outcome-item fade-in">
+            <div class="outcome-num">iii</div>
+            <div class="outcome-text">
+              <h3>Your inactive list starts producing.</h3>
+              <p>Six figures of dormant production reactivated in the first quarter. Measured, reported, attributable.</p>
+            </div>
+          </div>
+          <div class="outcome-item fade-in">
+            <div class="outcome-num">iv</div>
+            <div class="outcome-text">
+              <h3>You make one great hire instead of three average ones.</h3>
+              <p>The person you keep becomes the leader you always wanted them to be, because they're finally doing patient facing work.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="pricing-inner">
+      <div class="pricing-header fade-in">
+        <div class="label">03 / Pricing</div>
+        <h2>Priced to <em>replace</em> a hire, not add a tool.</h2>
+      </div>
+
+      <div class="plans">
+        <div class="plan fade-in">
+          <div class="plan-name">Foundation</div>
+          <div class="plan-desc">For practices ready to stop missing calls and start verifying insurance the right way.</div>
+          <div class="plan-price">$795<span class="per">/mo</span></div>
+          <div class="plan-setup">$2,400 setup, 90 day commitment</div>
+          <ul class="plan-features">
+            <li>AI phone and front desk agent</li>
+            <li>Insurance verification, daily</li>
+            <li>PMS integration (Dentrix, Eaglesoft, Open Dental)</li>
+            <li>Monthly performance review</li>
+          </ul>
+          <a href="#cta" class="plan-cta">Start with Foundation</a>
+        </div>
+
+        <div class="plan featured fade-in">
+          <div class="plan-flag">Most chosen</div>
+          <div class="plan-name">Operator</div>
+          <div class="plan-desc">For practices that want the front office running quietly in the background, end to end.</div>
+          <div class="plan-price">$1,495<span class="per">/mo</span></div>
+          <div class="plan-setup">$3,600 setup, 90 day commitment</div>
+          <ul class="plan-features">
+            <li>Everything in Foundation</li>
+            <li>Recall and reactivation outreach</li>
+            <li>Treatment plan follow up</li>
+            <li>Daily morning and evening reports</li>
+            <li>Weekly call with your account lead</li>
+          </ul>
+          <a href="#cta" class="plan-cta">Start with Operator</a>
+        </div>
+
+        <div class="plan fade-in">
+          <div class="plan-name">Group</div>
+          <div class="plan-desc">For multi location practices and small dental groups consolidating their back office.</div>
+          <div class="plan-price">Custom</div>
+          <div class="plan-setup">Tailored to your locations and PMS stack</div>
+          <ul class="plan-features">
+            <li>Everything in Operator</li>
+            <li>Multi location reporting</li>
+            <li>Centralized scheduling logic</li>
+            <li>Custom integrations and workflows</li>
+            <li>Dedicated implementation team</li>
+          </ul>
+          <a href="#cta" class="plan-cta">Talk to us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta" id="cta">
+    <div class="container">
+      <h2 class="fade-in">Stop running an HR department. Start running a <em>practice.</em></h2>
+      <p class="fade-in">
+        Twenty minutes on the phone. We'll look at your numbers together and tell you, honestly, whether Chairside makes sense for your practice. If it doesn't, we'll tell you that too.
+      </p>
+      <a href="#" class="btn-primary fade-in">
+        Book a 20 minute walkthrough
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Chairside<em>.</em></div>
+        <div class="footer-tag">AI operations built for the way private dental practices actually run.</div>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#services">What we run</a></li>
+          <li><a href="#outcomes">Outcomes</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Writing</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Trust</h4>
+        <ul>
+          <li><a href="#">HIPAA</a></li>
+          <li><a href="#">Security</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Chairside Operations Inc.</div>
+      <div>Built for practices that want their evenings back.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Fade in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
